@@ -48,6 +48,7 @@
             label6 = new Label();
             label7 = new Label();
             label8 = new Label();
+            button3 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownPrice).BeginInit();
@@ -116,7 +117,7 @@
             // 
             // btnSortByPrice
             // 
-            btnSortByPrice.Location = new Point(612, 427);
+            btnSortByPrice.Location = new Point(692, 12);
             btnSortByPrice.Name = "btnSortByPrice";
             btnSortByPrice.Size = new Size(96, 23);
             btnSortByPrice.TabIndex = 18;
@@ -231,11 +232,22 @@
             label8.TabIndex = 31;
             label8.Text = "Delete: Only enter IdProduct";
             // 
+            // button3
+            // 
+            button3.Location = new Point(679, 398);
+            button3.Name = "button3";
+            button3.Size = new Size(121, 23);
+            button3.TabIndex = 32;
+            button3.Text = "UserManagement";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
             // AdminForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button3);
             Controls.Add(label8);
             Controls.Add(label7);
             Controls.Add(label6);
@@ -288,5 +300,6 @@
         private Label label6;
         private Label label7;
         private Label label8;
+        private Button button3;
     }
 }

@@ -18,7 +18,7 @@ namespace WinFormsApp2
         private void LoadData()
         {
             listProduct = new ListProduct();
-             products = listProduct.GetProducts();
+            products = listProduct.GetProducts();
             dataGridView1.DataSource = products;
         }
 
@@ -56,32 +56,30 @@ namespace WinFormsApp2
             dataGridView1.DataSource = products;
         }
 
-       
-
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            
-                decimal Id = numericUpDownId.Value;
-                listProduct.DeleteProduct(Id);
-                LoadData();
-                ClearInputFields();
-           
-          
+
+            decimal Id = numericUpDownId.Value;
+            listProduct.DeleteProduct(Id);
+            LoadData();
+            ClearInputFields();
+
+
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            
-                decimal Id = numericUpDownId.Value;
-            string Name = textBoxName.Text; 
+
+            decimal Id = numericUpDownId.Value;
+            string Name = textBoxName.Text;
             string Description = textBoxDescription.Text;
-            decimal Price= numericUpDownPrice.Value ;
-            decimal Stock= numericUpDownStock.Value;
-          
-                listProduct.UpdateProduct(Id, Name, Description, Price, Stock);
-                LoadData();
-                ClearInputFields();
-            
+            decimal Price = numericUpDownPrice.Value;
+            decimal Stock = numericUpDownStock.Value;
+
+            listProduct.UpdateProduct(Id, Name, Description, Price, Stock);
+            LoadData();
+            ClearInputFields();
+
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -106,6 +104,13 @@ namespace WinFormsApp2
             numericUpDownPrice.Value = 0;
             numericUpDownStock.Value = 0;
             numericUpDownId.Value = 0;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            UserManagement form1 = new UserManagement();
+            this.Hide();
+            form1.Show();
         }
     }
 }
