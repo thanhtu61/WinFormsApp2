@@ -49,6 +49,8 @@
             label8 = new Label();
             label7 = new Label();
             label9 = new Label();
+            button4 = new Button();
+            button3 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownId).BeginInit();
             SuspendLayout();
@@ -56,11 +58,11 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(260, 34);
+            dataGridView1.Location = new Point(269, 34);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(528, 322);
             dataGridView1.TabIndex = 0;
-          //  dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // button1
             // 
@@ -74,7 +76,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(713, 415);
+            button2.Location = new Point(722, 423);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 2;
@@ -235,11 +237,33 @@
             label9.TabIndex = 46;
             label9.Text = "Note: Add : Not enter Id User";
             // 
+            // button4
+            // 
+            button4.Location = new Point(676, 363);
+            button4.Name = "button4";
+            button4.Size = new Size(121, 23);
+            button4.TabIndex = 50;
+            button4.Text = "ProductManagement";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(676, 394);
+            button3.Name = "button3";
+            button3.Size = new Size(121, 23);
+            button3.TabIndex = 49;
+            button3.Text = "OrderManagement";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
             // UserManagement
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button4);
+            Controls.Add(button3);
             Controls.Add(label8);
             Controls.Add(label7);
             Controls.Add(label9);
@@ -263,6 +287,7 @@
             Controls.Add(dataGridView1);
             Name = "UserManagement";
             Text = "UserManagement";
+            Load += UserManagement_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownId).EndInit();
             ResumeLayout(false);
@@ -292,5 +317,7 @@
         private Label label8;
         private Label label7;
         private Label label9;
+        private Button button4;
+        private Button button3;
     }
 }

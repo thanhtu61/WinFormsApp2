@@ -38,3 +38,4 @@ C:\Users\trant\source\repos\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\W
 C:\Users\trant\source\repos\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.genruntimeconfig.cache
 C:\Users\trant\source\repos\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\ref\WinFormsApp2.dll
 C:\Users\trant\source\repos\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.CartForm.resources
+C:\Users\trant\source\repos\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.OrderManagement.resources

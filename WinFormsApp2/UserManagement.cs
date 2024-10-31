@@ -28,7 +28,7 @@ namespace WinFormsApp2
         {
             listUser = new ListUser();
             Users = listUser.GetUsers();
-            dataGridView1.DataSource = Users; 
+            dataGridView1.DataSource = Users;
             dataGridView1.Columns["Password"].Visible = false;
         }
         private void btnDelete_Click_1(object sender, EventArgs e)
@@ -38,13 +38,13 @@ namespace WinFormsApp2
             LoadData();
             ClearInputFields();
         }
-       
+
         private void btnEdit_Click_1(object sender, EventArgs e)
         {
             decimal Id = numericUpDownId.Value;
             string Name = textBoxName.Text;
             string Email = textBoxEmail.Text;
-            string Password= textBoxPassword.Text;
+            string Password = textBoxPassword.Text;
             string Phone = textBoxPhone.Text;
             string Address = textBoxAddress.Text;
 
@@ -92,6 +92,30 @@ namespace WinFormsApp2
         private void button2_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }    
+        }
+
+        private void UserManagement_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            OrderManagement form1 = new OrderManagement();
+            this.Hide();
+            form1.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            AdminForm form1 = new AdminForm();
+            this.Hide();
+            form1.Show();
+        }
     }
 }

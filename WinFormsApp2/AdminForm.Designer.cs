@@ -49,6 +49,7 @@
             label7 = new Label();
             label8 = new Label();
             button3 = new Button();
+            button4 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownPrice).BeginInit();
@@ -79,7 +80,7 @@
             // 
             dataGridView1.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(260, 52);
+            dataGridView1.Location = new Point(260, 41);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(540, 318);
             dataGridView1.TabIndex = 2;
@@ -242,11 +243,22 @@
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
+            // button4
+            // 
+            button4.Location = new Point(679, 366);
+            button4.Name = "button4";
+            button4.Size = new Size(121, 23);
+            button4.TabIndex = 33;
+            button4.Text = "OrderManagement";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
             // AdminForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(label8);
             Controls.Add(label7);
@@ -301,5 +313,6 @@
         private Label label7;
         private Label label8;
         private Button button3;
+        private Button button4;
     }
 }

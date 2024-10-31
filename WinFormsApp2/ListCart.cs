@@ -7,7 +7,7 @@ namespace WinFormsApp2
 {
     public class ListCart
     {
-        public object ClientID { get; private set; }
+        public decimal sum;
 
         public List<Cart> ClientGetCart(int clientId)
         {
@@ -21,7 +21,7 @@ namespace WinFormsApp2
                 using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
                 {
                     connection.Open();
-                    string query = "SELECT clientId, CartID, cart.ProductID,ProductName,PRICE, Quantity, DateAdded  FROM cart JOIN Product ON CART.ProductID=PRODUCT.ProductID WHERE ClientID = @clientID;";
+                    string query = "SELECT clientId, CartID, cart.ProductID,ProductName,PRICE, Quantity, (PRICE * Quantity) AS Total,  DateAdded  FROM cart JOIN Product ON CART.ProductID=PRODUCT.ProductID WHERE ClientID = @clientID;";
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@clientID", clientId);
@@ -38,9 +38,12 @@ namespace WinFormsApp2
                                     ProductName = reader.IsDBNull(3) ? null : reader.GetString(3),
                                     Price = reader.GetDecimal(4),
                                     Quantity = reader.GetInt32(5),
-                                    DateAdded = reader.GetDateTime(6),
+                                    Total=reader.GetDecimal(6),
+                                    DateAdded = reader.GetDateTime(7),
+                                    
 
                                 };
+                                sum += cart.Total;
                                 listCarts.Add(cart);
                             }
                         }
@@ -75,23 +78,59 @@ namespace WinFormsApp2
             }
         }
 
+        
+        internal void DeleteAllCart(int id)
+        {
+            string dbPath = "ComputerStote.db"; // Ensure the path is correct
+
+            try
+            {
+                using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+                {
+                    connection.Open();
+                    string query = "DELETE FROM cart WHERE ClientID = @ClientID;";
+                    using (var command = new SQLiteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@ClientID", id);
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected == 0)
+                        {
+                            // Optionally handle the case where no rows were deleted
+                            Console.WriteLine("No records found for the given ClientID.");
+                        }
+                    }
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                // Handle database-related exceptions
+                Console.WriteLine($"Database error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
         public class Cart
         {
             public int CartId { get; set; }
             public int ClientId { get; set; }
             public int ProductId { get; set; }
-            public decimal Price { get; set; }
             public String ProductName { get; set; }
+            public decimal Price { get; set; }
             public int Quantity { get; set; }
+            public decimal Total { get; set; }
             public DateTime DateAdded { get; set; }
 
-            public Cart(int cartId, int clientId, int productId,String ProductName, decimal Price, int quantity, DateTime dateAdded)
+            public Cart(int cartId, int clientId, int productId,String ProductName, decimal Price, decimal Total, int quantity, DateTime dateAdded)
             {
                 CartId = cartId; // Fixed the assignment
                 ClientId = clientId;
                 ProductId = productId;
                 ProductName = ProductName;
                 Price = Price;
+                Total = Total;
                 Quantity = quantity;
                 DateAdded = dateAdded;
             }

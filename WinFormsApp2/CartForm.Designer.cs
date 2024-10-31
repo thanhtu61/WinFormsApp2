@@ -34,6 +34,8 @@
             numericUpDown1 = new NumericUpDown();
             label1 = new Label();
             btnDelete = new Button();
+            btnOrder = new Button();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SuspendLayout();
@@ -50,7 +52,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(700, 399);
+            button2.Location = new Point(713, 415);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 1;
@@ -62,14 +64,14 @@
             // 
             dataGridView1.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(192, 59);
+            dataGridView1.Location = new Point(138, 59);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(558, 309);
+            dataGridView1.Size = new Size(637, 321);
             dataGridView1.TabIndex = 2;
             // 
             // numericUpDown1
             // 
-            numericUpDown1.Location = new Point(63, 77);
+            numericUpDown1.Location = new Point(12, 77);
             numericUpDown1.Name = "numericUpDown1";
             numericUpDown1.Size = new Size(120, 23);
             numericUpDown1.TabIndex = 4;
@@ -85,7 +87,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(63, 155);
+            btnDelete.Location = new Point(12, 106);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(75, 23);
             btnDelete.TabIndex = 7;
@@ -93,11 +95,32 @@
             btnDelete.UseVisualStyleBackColor = true;
             btnDelete.Click += btnDelete_Click;
             // 
+            // btnOrder
+            // 
+            btnOrder.Location = new Point(12, 370);
+            btnOrder.Name = "btnOrder";
+            btnOrder.Size = new Size(75, 23);
+            btnOrder.TabIndex = 8;
+            btnOrder.Text = "Order";
+            btnOrder.UseVisualStyleBackColor = true;
+            btnOrder.Click += btnOrder_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(12, 341);
+            label2.Name = "label2";
+            label2.Size = new Size(38, 15);
+            label2.TabIndex = 9;
+            label2.Text = "label2";
+            // 
             // CartForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label2);
+            Controls.Add(btnOrder);
             Controls.Add(btnDelete);
             Controls.Add(label1);
             Controls.Add(numericUpDown1);
@@ -119,8 +142,7 @@
         private DataGridView dataGridView1;
         private NumericUpDown numericUpDown1;
         private Label label1;
-        
-
-       
+        private Button btnOrder;
+        private Label label2;
     }
 }

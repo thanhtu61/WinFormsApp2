@@ -112,5 +112,12 @@ namespace WinFormsApp2
             this.Hide();
             form1.Show();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            OrderManagement form1 = new OrderManagement();
+            this.Hide();
+            form1.Show();
+        }
     }
 }
