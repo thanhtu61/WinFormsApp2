@@ -13,6 +13,7 @@ namespace WinFormsApp2
 {
     public partial class ClientLogin : Form
     {
+        int clientID;
         public ClientLogin()
         {
             InitializeComponent();
@@ -24,10 +25,11 @@ namespace WinFormsApp2
             string password = textBox2.Text;
 
             // Giả sử bạn có một hàm kiểm tra thông tin đăng nhập
-            if (CheckLogin(username, password))
+            if (CheckLogin(username, password)!=0)
             {
                 // Nếu thông tin đăng nhập đúng, mở form AdminForm
-                ClientForm clientForm = new ClientForm();
+                clientID = CheckLogin(username, password);
+                ClientForm clientForm = new ClientForm(clientID);
                 clientForm.Show();
                 this.Hide(); // Ẩn form đăng nhập
             }
@@ -46,7 +48,7 @@ namespace WinFormsApp2
             this.Hide(); // Ẩn form đăng nhập
         }
 
-        private bool CheckLogin(string username, string password)
+        private int CheckLogin(string username, string password)
         {
             // Đường dẫn đến cơ sở dữ liệu của bạn
             string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
@@ -68,12 +70,13 @@ namespace WinFormsApp2
                     {
                         if (reader.Read()) // Nếu có ít nhất một dòng kết quả
                         {
-                            return true; // Đăng nhập thành công
+                            clientID = reader.GetInt32(0);
+                            return clientID; // Đăng nhập thành công
                         }
                         else
                         {
 
-                            return false; // Đăng nhập thất bại
+                            return 0; // Đăng nhập thất bại
                         }
                     }
                 }
