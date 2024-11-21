@@ -38,9 +38,18 @@ namespace WinFormsApp2
         }
         private void btnSortByPrice_Click_1(object sender, EventArgs e)
         {
-            listProduct = new ListProduct();
-            products = listProduct.SortProduct();
-            dataGridView1.DataSource = products;
+            // Kiểm tra nếu danh sách sản phẩm không rỗng
+            if (products != null && products.Count > 0)
+            {
+                // Sắp xếp danh sách sản phẩm theo giá
+                products = products.OrderBy(p => p.Price).ToList(); // Sắp xếp tăng dần
+                dataGridView1.DataSource = null; // Xóa nguồn dữ liệu hiện tại
+                dataGridView1.DataSource = products; // Gán lại danh sách đã sắp xếp
+            }
+            else
+            {
+                MessageBox.Show("Không có sản phẩm để sắp xếp.");
+            }
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -142,9 +151,20 @@ namespace WinFormsApp2
 
         private void button6_Click(object sender, EventArgs e)
         {
-            listProduct = new ListProduct();
-            products = listProduct.SortProduct1();
-            dataGridView1.DataSource = products;
+            
+                // Kiểm tra nếu danh sách sản phẩm không rỗng
+                if (products != null && products.Count > 0)
+                {
+                    // Sắp xếp danh sách sản phẩm theo số lượng
+                    products = products.OrderBy(p => p.StockQuantity).ToList(); // Sắp xếp tăng dần
+                    dataGridView1.DataSource = null; // Xóa nguồn dữ liệu hiện tại
+                    dataGridView1.DataSource = products; // Gán lại danh sách đã sắp xếp
+                }
+                else
+                {
+                    MessageBox.Show("Không có sản phẩm để sắp xếp.");
+                }
+            
         }
     }
 }
