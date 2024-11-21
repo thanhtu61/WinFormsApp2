@@ -119,5 +119,33 @@ namespace WinFormsApp2
             this.Hide();
             form1.Show();
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            listProduct = new ListProduct();
+            products = listProduct.GetProducts1();
+            dataGridView1.DataSource = products;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            listProduct = new ListProduct();
+            products = listProduct.GetProducts2();
+            dataGridView1.DataSource = products;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            listProduct = new ListProduct();
+            products = listProduct.GetProducts3();
+            dataGridView1.DataSource = products;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            listProduct = new ListProduct();
+            products = listProduct.SortProduct1();
+            dataGridView1.DataSource = products;
+        }
     }
 }

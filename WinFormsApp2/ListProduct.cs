@@ -53,6 +53,135 @@ namespace WinFormsApp2
 
             return listProducts;
         }
+        public List<Product> GetProducts1()
+        {
+            List<Product> listProducts = new List<Product>();
+
+            try
+            {
+                string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
+
+                using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+
+                {
+                    connection.Open();
+                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity FROM Product WHERE Categoryid=1;";
+
+                    using (var command = new SQLiteCommand(query, connection))
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var product = new Product
+                            {
+                                IdProduct = reader.GetInt32(0),
+                                ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
+                                Description = reader.IsDBNull(2) ? null : reader.GetString(2),
+                                Price = reader.GetDecimal(3),
+                                StockQuantity = reader.GetInt32(4)
+                            };
+                            listProducts.Add(product);
+                        }
+                    }
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+
+            return listProducts;
+        }
+        public List<Product> GetProducts2()
+        {
+            List<Product> listProducts = new List<Product>();
+
+            try
+            {
+                string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
+
+                using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+
+                {
+                    connection.Open();
+                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity FROM Product WHERE Categoryid=2;";
+
+                    using (var command = new SQLiteCommand(query, connection))
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var product = new Product
+                            {
+                                IdProduct = reader.GetInt32(0),
+                                ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
+                                Description = reader.IsDBNull(2) ? null : reader.GetString(2),
+                                Price = reader.GetDecimal(3),
+                                StockQuantity = reader.GetInt32(4)
+                            };
+                            listProducts.Add(product);
+                        }
+                    }
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+
+            return listProducts;
+        }
+        public List<Product> GetProducts3()
+        {
+            List<Product> listProducts = new List<Product>();
+
+            try
+            {
+                string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
+
+                using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+
+                {
+                    connection.Open();
+                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity FROM Product WHERE Categoryid=3;";
+
+                    using (var command = new SQLiteCommand(query, connection))
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var product = new Product
+                            {
+                                IdProduct = reader.GetInt32(0),
+                                ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
+                                Description = reader.IsDBNull(2) ? null : reader.GetString(2),
+                                Price = reader.GetDecimal(3),
+                                StockQuantity = reader.GetInt32(4)
+                            };
+                            listProducts.Add(product);
+                        }
+                    }
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+
+            return listProducts;
+        }
         public List<Product> SortProduct()
         {
             string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
@@ -80,7 +209,34 @@ namespace WinFormsApp2
             }
             return listProducts;
         }
-            internal void AddProduct(Product product)
+        public List<Product> SortProduct1()
+        {
+            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
+            List<Product> listProducts = new List<Product>();
+            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+            {
+                connection.Open();
+                string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity FROM Product order by StockQuantity";
+                using (var command = new SQLiteCommand(query, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Product product = new Product
+                        {
+                            IdProduct = reader.GetInt32(0),
+                            ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
+                            Description = reader.IsDBNull(2) ? null : reader.GetString(2),
+                            Price = reader.GetDecimal(3),
+                            StockQuantity = reader.GetInt32(4)
+                        };
+                        listProducts.Add(product);
+                    }
+                }
+            }
+            return listProducts;
+        }
+        internal void AddProduct(Product product)
         {
             string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
 

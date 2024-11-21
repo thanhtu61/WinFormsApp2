@@ -64,18 +64,43 @@ namespace WinFormsApp2
 
         private void AddToCart_Click(object sender, EventArgs e)
         {
+
             int productId = (int)numericUpDownProductId.Value;
             int quantity = (int)numericUpDownQuantity.Value;
 
             if (productId > 0 && quantity > 0)
             {
-                string dbPath = "ComputerStote.db"; // Đường dẫn đến cơ sở dữ liệu của bạn
+                string dbPath = "ComputerStote.db"; // Path to your database
 
                 using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
                 {
                     connection.Open();
-                    string query = "INSERT INTO cart (ClientID, ProductID, Quantity, DateAdded) VALUES (@clientId, @productId, @quantity, @dateAdded)";
 
+                    // Check stock quantity
+                    string stockQuery = "SELECT StockQuantity FROM Product WHERE ProductID = @productId";
+                    using (var stockCommand = new SQLiteCommand(stockQuery, connection))
+                    {
+                        stockCommand.Parameters.AddWithValue("@productId", productId);
+                        object stockQuantityObj = stockCommand.ExecuteScalar();
+
+                        if (stockQuantityObj != null)
+                        {
+                            int stockQuantity = Convert.ToInt32(stockQuantityObj);
+                            if (stockQuantity < quantity)
+                            {
+                                MessageBox.Show("Cannot add to cart: Insufficient stock available.");
+                                return; // Exit the method if stock is insufficient
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Product not found.");
+                            return; // Exit if product ID is invalid
+                        }
+                    }
+
+                    // If stock is sufficient, proceed to add to cart
+                    string query = "INSERT INTO cart (ClientID, ProductID, Quantity, DateAdded) VALUES (@clientId, @productId, @quantity, @dateAdded)";
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@clientId", clientID);
@@ -93,5 +118,34 @@ namespace WinFormsApp2
                 MessageBox.Show("Please enter valid Product ID and Quantity.");
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            listProduct = new ListProduct();
+            products = listProduct.GetProducts1();
+            dataGridView1.DataSource = products;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            listProduct = new ListProduct();
+            products = listProduct.GetProducts2();
+            dataGridView1.DataSource = products;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            listProduct = new ListProduct();
+            products = listProduct.GetProducts3();
+            dataGridView1.DataSource = products;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            listProduct = new ListProduct();
+            products = listProduct.SortProduct1();
+            dataGridView1.DataSource = products;
+        }
     }
 }
+

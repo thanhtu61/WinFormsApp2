@@ -50,6 +50,10 @@
             label8 = new Label();
             button3 = new Button();
             button4 = new Button();
+            button6 = new Button();
+            button5 = new Button();
+            button7 = new Button();
+            button8 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownPrice).BeginInit();
@@ -118,7 +122,7 @@
             // 
             // btnSortByPrice
             // 
-            btnSortByPrice.Location = new Point(692, 12);
+            btnSortByPrice.Location = new Point(690, 16);
             btnSortByPrice.Name = "btnSortByPrice";
             btnSortByPrice.Size = new Size(96, 23);
             btnSortByPrice.TabIndex = 18;
@@ -253,11 +257,55 @@
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
+            // button6
+            // 
+            button6.Location = new Point(575, 16);
+            button6.Name = "button6";
+            button6.Size = new Size(109, 23);
+            button6.TabIndex = 37;
+            button6.Text = "Sort by quantity";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
+            // button5
+            // 
+            button5.Location = new Point(443, 1);
+            button5.Name = "button5";
+            button5.Size = new Size(113, 23);
+            button5.TabIndex = 36;
+            button5.Text = "Other Equipment";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
+            // button7
+            // 
+            button7.Location = new Point(352, 1);
+            button7.Name = "button7";
+            button7.Size = new Size(75, 23);
+            button7.TabIndex = 35;
+            button7.Text = "Ipad";
+            button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
+            // 
+            // button8
+            // 
+            button8.Location = new Point(261, 1);
+            button8.Name = "button8";
+            button8.Size = new Size(75, 23);
+            button8.TabIndex = 34;
+            button8.Text = "Telephone";
+            button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
+            // 
             // AdminForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button6);
+            Controls.Add(button5);
+            Controls.Add(button7);
+            Controls.Add(button8);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(label8);
@@ -314,5 +362,9 @@
         private Label label8;
         private Button button3;
         private Button button4;
+        private Button button6;
+        private Button button5;
+        private Button button7;
+        private Button button8;
     }
 }

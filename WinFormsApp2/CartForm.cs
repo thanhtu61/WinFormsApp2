@@ -125,6 +125,41 @@ namespace WinFormsApp2
 
                             command.ExecuteNonQuery();
                         }
+                        string updateQuery = "UPDATE Product SET StockQuantity = StockQuantity - @Quantity WHERE ProductID = @ProductID";
+
+                        using (SQLiteCommand updateCommand = new SQLiteCommand(updateQuery, connection))
+                        {
+                            updateCommand.Parameters.AddWithValue("@Quantity", item.Quantity);
+                            updateCommand.Parameters.AddWithValue("@ProductID", item.ProductID);
+
+                            int rowsAffected = updateCommand.ExecuteNonQuery();
+                            if (rowsAffected == 0)
+                            {
+                                MessageBox.Show($"Не удалось обновить количество на складе для продукта ID: {item.ProductID}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
+                        // Check for stock quantity and delete if necessary
+                        string checkQuery = "SELECT StockQuantity FROM Product WHERE ProductID = @ProductID";
+
+                        using (SQLiteCommand checkCommand = new SQLiteCommand(checkQuery, connection))
+                        {
+                            checkCommand.Parameters.AddWithValue("@ProductID", item.ProductID);
+                            object stockQuantityObj = checkCommand.ExecuteScalar();
+
+                            if (stockQuantityObj != null && Convert.ToInt32(stockQuantityObj) <= 0)
+                            {
+                                // Delete the product if stock quantity is zero
+                                string deleteQuery = "DELETE FROM Product WHERE ProductID = @ProductID";
+
+                                using (SQLiteCommand deleteCommand = new SQLiteCommand(deleteQuery, connection))
+                                {
+                                    deleteCommand.Parameters.AddWithValue("@ProductID", item.ProductID);
+                                    deleteCommand.ExecuteNonQuery();
+                                }
+
+                                //MessageBox.Show($"Продукт ID: {item.ProductID} был удален из базы данных, так как его количество на складе достигло нуля.", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
                     }
                 }
 
