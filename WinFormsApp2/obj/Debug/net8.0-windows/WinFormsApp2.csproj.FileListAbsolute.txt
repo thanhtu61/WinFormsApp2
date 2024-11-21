@@ -39,3 +39,44 @@ C:\Users\trant\source\repos\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\W
 C:\Users\trant\source\repos\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\ref\WinFormsApp2.dll
 C:\Users\trant\source\repos\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.CartForm.resources
 C:\Users\trant\source\repos\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.OrderManagement.resources
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\WinFormsApp2.exe
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\WinFormsApp2.deps.json
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\WinFormsApp2.runtimeconfig.json
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\WinFormsApp2.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\WinFormsApp2.pdb
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\EntityFramework.SqlServer.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\EntityFramework.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\System.Data.SQLite.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\System.Data.SqlClient.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\System.Data.SQLite.EF6.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\runtimes\win-arm64\native\sni.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\runtimes\win-x64\native\sni.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\runtimes\win-x86\native\sni.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\runtimes\linux-x64\native\SQLite.Interop.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\runtimes\osx-x64\native\SQLite.Interop.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\runtimes\win-x64\native\SQLite.Interop.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\runtimes\win-x86\native\SQLite.Interop.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\bin\Debug\net8.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.csproj.AssemblyReference.cache
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.AdminForm.resources
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.AdminLogin.resources
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.CartForm.resources
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.ClientForm.resources
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.ClientLogin.resources
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.CreateAccountActivityForm.resources
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.Form1.resources
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.OrderManagement.resources
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.UserManagement.resources
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.csproj.GenerateResource.cache
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.GeneratedMSBuildEditorConfig.editorconfig
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.AssemblyInfoInputs.cache
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.AssemblyInfo.cs
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.csproj.CoreCompileInputs.cache
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.sourcelink.json
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.csproj.CopyComplete
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\refint\WinFormsApp2.dll
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.pdb
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\WinFormsApp2.genruntimeconfig.cache
+D:\kiem\Thư mục mới\WinFormsApp2\WinFormsApp2\obj\Debug\net8.0-windows\ref\WinFormsApp2.dll

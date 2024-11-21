@@ -33,7 +33,11 @@
             button3 = new Button();
             button2 = new Button();
             button1 = new Button();
+            numericUpDownId = new NumericUpDown();
+            label1 = new Label();
+            btnDelete = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownId).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
@@ -85,11 +89,42 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // numericUpDownId
+            // 
+            numericUpDownId.Location = new Point(12, 366);
+            numericUpDownId.Name = "numericUpDownId";
+            numericUpDownId.Size = new Size(120, 23);
+            numericUpDownId.TabIndex = 43;
+           // numericUpDownId.ValueChanged += numericUpDownId_ValueChanged;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 348);
+            label1.Name = "label1";
+            label1.Size = new Size(50, 15);
+            label1.TabIndex = 42;
+            label1.Text = "Id Order";
+            label1.Click += label1_Click;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(12, 395);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(75, 23);
+            btnDelete.TabIndex = 41;
+            btnDelete.Text = "Delete";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
+            // 
             // OrderManagement
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(numericUpDownId);
+            Controls.Add(label1);
+            Controls.Add(btnDelete);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
@@ -98,7 +133,9 @@
             Name = "OrderManagement";
             Text = "OrderManagement";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownId).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -108,5 +145,8 @@
         private Button button3;
         private Button button2;
         private Button button1;
+        private NumericUpDown numericUpDownId;
+        private Label label1;
+        private Button btnDelete;
     }
 }

@@ -34,9 +34,9 @@
             // 
             // btnAdminLogin
             // 
-            btnAdminLogin.Location = new Point(297, 89);
+            btnAdminLogin.Location = new Point(327, 104);
             btnAdminLogin.Name = "btnAdminLogin";
-            btnAdminLogin.Size = new Size(195, 85);
+            btnAdminLogin.Size = new Size(133, 46);
             btnAdminLogin.TabIndex = 0;
             btnAdminLogin.Text = "Admin";
             btnAdminLogin.UseVisualStyleBackColor = true;
@@ -44,9 +44,9 @@
             // 
             // btnClientLogin
             // 
-            btnClientLogin.Location = new Point(297, 180);
+            btnClientLogin.Location = new Point(327, 177);
             btnClientLogin.Name = "btnClientLogin";
-            btnClientLogin.Size = new Size(195, 79);
+            btnClientLogin.Size = new Size(133, 45);
             btnClientLogin.TabIndex = 1;
             btnClientLogin.Text = "Client";
             btnClientLogin.UseVisualStyleBackColor = true;

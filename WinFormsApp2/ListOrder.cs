@@ -52,7 +52,34 @@ namespace WinFormsApp2
 
             return listOrders;
         }
+        internal void DeleteOrder(decimal idOrder)
+        {
+            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
 
+            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+            {
+                connection.Open();
+
+                // Xóa bản ghi trong bảng Client trước
+                string deleteClientQuery = "DELETE FROM [Order] WHERE OrderId = @idOrder;";
+                using (var clientCommand = new SQLiteCommand(deleteClientQuery, connection))
+                {
+                    clientCommand.Parameters.AddWithValue("@idOrder", idOrder);
+                    int clientResult = clientCommand.ExecuteNonQuery();
+
+                    if (clientResult > 0)
+                    {
+                        MessageBox.Show("Account deleted successfully!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error deleting account. User may not exist.");
+                    }
+                }
+
+          
+            }
+        }
         public class Order
         {
             public int orderID { get; set; }

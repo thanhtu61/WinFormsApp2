@@ -26,11 +26,11 @@ namespace WinFormsApp2
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Có lỗi xảy ra khi tải dữ liệu đơn hàng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Произошла ошибка при загрузке данных заказа:{ex.Message}", "ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -57,5 +57,21 @@ namespace WinFormsApp2
             this.Hide();
             form1.Show();
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+
+            decimal Id = numericUpDownId.Value;
+            listOrder.DeleteOrder(Id);
+            LoadData();
+            numericUpDownId.Value = 0;
+        }
+
+       
     }
 }

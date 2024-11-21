@@ -89,7 +89,7 @@ namespace WinFormsApp2
             // Kiểm tra nếu danh sách orderItems không rỗng
             if (orderItems.Count == 0)
             {
-                MessageBox.Show("Giỏ hàng trống! Vui lòng thêm sản phẩm trước khi đặt hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Корзина пуста! Пожалуйста, добавьте товары перед заказом.", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -97,7 +97,7 @@ namespace WinFormsApp2
             listCart.DeleteAllCart(clientID1);
             LoadData();
             ClearInputFields();
-            MessageBox.Show("Đơn hàng đã được đặt thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Заказ успешно размещен!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void SaveOrderItemsToDatabase(List<OrderItem> orderItems)
@@ -128,15 +128,15 @@ namespace WinFormsApp2
                     }
                 }
 
-                MessageBox.Show("Đơn hàng đã được lưu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Заказ успешно сохранен!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (SQLiteException ex)
             {
-                MessageBox.Show($"Có lỗi xảy ra khi lưu đơn hàng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"При сохранении заказа произошла ошибка: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Có lỗi xảy ra: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

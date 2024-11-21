@@ -38,7 +38,7 @@ namespace WinFormsApp2
             else
             {
                 // Nếu thông tin đăng nhập không đúng, hiển thị thông báo
-                MessageBox.Show("Tên người dùng hoặc mật khẩu không đúng. Vui lòng nhập lại.", "Lỗi đăng nhập", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Имя пользователя или пароль неверны. Пожалуйста, войдите еще раз.", "Ошибка входа", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

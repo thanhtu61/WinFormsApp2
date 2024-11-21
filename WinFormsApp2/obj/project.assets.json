@@ -1220,11 +1220,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\trant\\source\\repos\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj",
+      "projectUniqueName": "D:\\kiem\\Thư mục mới\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj",
       "projectName": "WinFormsApp2",
-      "projectPath": "C:\\Users\\trant\\source\\repos\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj",
+      "projectPath": "D:\\kiem\\Thư mục mới\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj",
       "packagesPath": "C:\\Users\\trant\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\trant\\source\\repos\\WinFormsApp2\\WinFormsApp2\\obj\\",
+      "outputPath": "D:\\kiem\\Thư mục mới\\WinFormsApp2\\WinFormsApp2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\trant\\AppData\\Roaming\\NuGet\\NuGet.Config",

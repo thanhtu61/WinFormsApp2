@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vQ2Uz/sRyHuvrjwQmU1QaEu4o+Jqb4taiceG67QO6xDGnh3rTkrz0AFeNqAf96bz65gm6p+DLAd1FVnqrYFPlQ==",
+  "dgSpecHash": "nNPJTUPWE41kFhPFjld6OD5HSpjBaZjVB01BKCriYFCuxVotqa7NW/i9ZlKvlYtRotu1dgjUjw/BWiDhaLigwA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\trant\\source\\repos\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj",
+  "projectFilePath": "D:\\kiem\\Thư mục mới\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\trant\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\trant\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
