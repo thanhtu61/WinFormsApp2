@@ -22,7 +22,7 @@ namespace WinFormsApp2
                
                 {
                     connection.Open();
-                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity FROM Product;";
+                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity,Categoryid FROM Product;";
 
                     using (var command = new SQLiteCommand(query, connection))
                     using (var reader = command.ExecuteReader())
@@ -35,7 +35,8 @@ namespace WinFormsApp2
                                 ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
                                 Description = reader.IsDBNull(2) ? null : reader.GetString(2),
                                 Price = reader.GetDecimal(3),
-                                StockQuantity = reader.GetInt32(4)
+                                StockQuantity = reader.GetInt32(4),
+                                Category = reader.GetInt32(5)
                             };
                             listProducts.Add(product);
                         }
@@ -65,7 +66,7 @@ namespace WinFormsApp2
 
                 {
                     connection.Open();
-                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity FROM Product WHERE Categoryid=1;";
+                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity,Categoryid FROM Product WHERE Categoryid=1;";
 
                     using (var command = new SQLiteCommand(query, connection))
                     using (var reader = command.ExecuteReader())
@@ -78,7 +79,8 @@ namespace WinFormsApp2
                                 ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
                                 Description = reader.IsDBNull(2) ? null : reader.GetString(2),
                                 Price = reader.GetDecimal(3),
-                                StockQuantity = reader.GetInt32(4)
+                                StockQuantity = reader.GetInt32(4),
+                                Category = reader.GetInt32(5)
                             };
                             listProducts.Add(product);
                         }
@@ -108,7 +110,7 @@ namespace WinFormsApp2
 
                 {
                     connection.Open();
-                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity FROM Product WHERE Categoryid=2;";
+                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity,Categoryid FROM Product WHERE Categoryid=2;";
 
                     using (var command = new SQLiteCommand(query, connection))
                     using (var reader = command.ExecuteReader())
@@ -121,7 +123,8 @@ namespace WinFormsApp2
                                 ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
                                 Description = reader.IsDBNull(2) ? null : reader.GetString(2),
                                 Price = reader.GetDecimal(3),
-                                StockQuantity = reader.GetInt32(4)
+                                StockQuantity = reader.GetInt32(4),
+                                Category = reader.GetInt32(5)
                             };
                             listProducts.Add(product);
                         }
@@ -151,7 +154,7 @@ namespace WinFormsApp2
 
                 {
                     connection.Open();
-                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity FROM Product WHERE Categoryid=3;";
+                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity, Categoryid FROM Product WHERE Categoryid=3;";
 
                     using (var command = new SQLiteCommand(query, connection))
                     using (var reader = command.ExecuteReader())
@@ -164,7 +167,8 @@ namespace WinFormsApp2
                                 ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
                                 Description = reader.IsDBNull(2) ? null : reader.GetString(2),
                                 Price = reader.GetDecimal(3),
-                                StockQuantity = reader.GetInt32(4)
+                                StockQuantity = reader.GetInt32(4),
+                                Category = reader.GetInt32(5)
                             };
                             listProducts.Add(product);
                         }
@@ -182,60 +186,7 @@ namespace WinFormsApp2
 
             return listProducts;
         }
-        public List<Product> SortProduct()
-        {
-            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
-            List<Product> listProducts = new List<Product>();
-            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
-            {
-                connection.Open();
-                string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity FROM Product order by Price";
-                using (var command = new SQLiteCommand(query, connection))
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        Product product = new Product
-                        {
-                            IdProduct = reader.GetInt32(0),
-                            ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
-                            Description = reader.IsDBNull(2) ? null : reader.GetString(2),
-                            Price = reader.GetDecimal(3),
-                            StockQuantity = reader.GetInt32(4)
-                        };
-                        listProducts.Add(product);
-                    }
-                }
-            }
-            return listProducts;
-        }
-        public List<Product> SortProduct1()
-        {
-            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
-            List<Product> listProducts = new List<Product>();
-            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
-            {
-                connection.Open();
-                string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity FROM Product order by StockQuantity";
-                using (var command = new SQLiteCommand(query, connection))
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        Product product = new Product
-                        {
-                            IdProduct = reader.GetInt32(0),
-                            ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
-                            Description = reader.IsDBNull(2) ? null : reader.GetString(2),
-                            Price = reader.GetDecimal(3),
-                            StockQuantity = reader.GetInt32(4)
-                        };
-                        listProducts.Add(product);
-                    }
-                }
-            }
-            return listProducts;
-        }
+       
         internal void AddProduct(Product product)
         {
             string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
@@ -243,13 +194,14 @@ namespace WinFormsApp2
             using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
             {
                 connection.Open();
-                string query = "INSERT INTO Product (ProductName, Description, Price, StockQuantity) VALUES (@ProductName, @Description, @Price, @StockQuantity)";
+                string query = "INSERT INTO Product (ProductName, Description, Price, StockQuantity, Categoryid ) VALUES (@ProductName, @Description, @Price, @StockQuantity, @Category)";
                 using (var command = new SQLiteCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@ProductName", product.ProductName);
                     command.Parameters.AddWithValue("@Description", product.Description);
                     command.Parameters.AddWithValue("@Price", product.Price);
                     command.Parameters.AddWithValue("@StockQuantity", product.StockQuantity);
+                    command.Parameters.AddWithValue("@Category", product.Category);
                     command.ExecuteNonQuery();
                 }
             }
@@ -299,5 +251,6 @@ public class Product
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
+        public int Category { get; set; }
     }
 }

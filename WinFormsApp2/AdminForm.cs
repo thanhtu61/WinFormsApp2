@@ -51,20 +51,20 @@ namespace WinFormsApp2
 
         private void btnSortByPrice_Click(object sender, EventArgs e)
         {
-           
-                // Kiểm tra nếu danh sách sản phẩm không rỗng
-                if (products != null && products.Count > 0)
-                {
-                    // Sắp xếp danh sách sản phẩm theo giá
-                    products = products.OrderBy(p => p.Price).ToList(); // Sắp xếp tăng dần
-                    dataGridView1.DataSource = null; // Xóa nguồn dữ liệu hiện tại
-                    dataGridView1.DataSource = products; // Gán lại danh sách đã sắp xếp
-                }
-                else
-                {
-                    MessageBox.Show("Không có sản phẩm để sắp xếp.");
-                }
-            
+
+            // Kiểm tra nếu danh sách sản phẩm không rỗng
+            if (products != null && products.Count > 0)
+            {
+                // Sắp xếp danh sách sản phẩm theo giá
+                products = products.OrderBy(p => p.Price).ToList(); // Sắp xếp tăng dần
+                dataGridView1.DataSource = null; // Xóa nguồn dữ liệu hiện tại
+                dataGridView1.DataSource = products; // Gán lại danh sách đã sắp xếp
+            }
+            else
+            {
+                MessageBox.Show("Không có sản phẩm để sắp xếp.");
+            }
+
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -100,7 +100,8 @@ namespace WinFormsApp2
                 ProductName = textBoxName.Text,
                 Description = textBoxDescription.Text,
                 Price = numericUpDownPrice.Value,
-                StockQuantity = (int)numericUpDownStock.Value
+                StockQuantity = (int)numericUpDownStock.Value,
+                Category= (int)numericUpDown1.Value
             };
 
             listProduct.AddProduct(newProduct);
@@ -115,6 +116,7 @@ namespace WinFormsApp2
             numericUpDownPrice.Value = 0;
             numericUpDownStock.Value = 0;
             numericUpDownId.Value = 0;
+            numericUpDown1.Value = 0;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -166,6 +168,16 @@ namespace WinFormsApp2
             {
                 MessageBox.Show("Không có sản phẩm để sắp xếp.");
             }
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

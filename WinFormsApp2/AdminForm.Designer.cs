@@ -54,10 +54,16 @@
             button5 = new Button();
             button7 = new Button();
             button8 = new Button();
+            numericUpDown1 = new NumericUpDown();
+            label9 = new Label();
+            label10 = new Label();
+            label11 = new Label();
+            label12 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownId).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -132,28 +138,28 @@
             // 
             // textBoxName
             // 
-            textBoxName.Location = new Point(12, 123);
+            textBoxName.Location = new Point(11, 107);
             textBoxName.Name = "textBoxName";
             textBoxName.Size = new Size(100, 23);
             textBoxName.TabIndex = 19;
             // 
             // textBoxDescription
             // 
-            textBoxDescription.Location = new Point(12, 179);
+            textBoxDescription.Location = new Point(11, 153);
             textBoxDescription.Name = "textBoxDescription";
             textBoxDescription.Size = new Size(100, 23);
             textBoxDescription.TabIndex = 20;
             // 
             // numericUpDownStock
             // 
-            numericUpDownStock.Location = new Point(12, 289);
+            numericUpDownStock.Location = new Point(13, 254);
             numericUpDownStock.Name = "numericUpDownStock";
             numericUpDownStock.Size = new Size(120, 23);
             numericUpDownStock.TabIndex = 21;
             // 
             // numericUpDownPrice
             // 
-            numericUpDownPrice.Location = new Point(14, 232);
+            numericUpDownPrice.Location = new Point(13, 202);
             numericUpDownPrice.Name = "numericUpDownPrice";
             numericUpDownPrice.Size = new Size(120, 23);
             numericUpDownPrice.TabIndex = 22;
@@ -161,7 +167,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 52);
+            label1.Location = new Point(11, 40);
             label1.Name = "label1";
             label1.Size = new Size(62, 15);
             label1.TabIndex = 23;
@@ -170,7 +176,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(14, 105);
+            label2.Location = new Point(13, 89);
             label2.Name = "label2";
             label2.Size = new Size(84, 15);
             label2.TabIndex = 24;
@@ -179,7 +185,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(12, 161);
+            label3.Location = new Point(11, 135);
             label3.Name = "label3";
             label3.Size = new Size(67, 15);
             label3.TabIndex = 25;
@@ -188,7 +194,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(12, 214);
+            label4.Location = new Point(11, 184);
             label4.Name = "label4";
             label4.Size = new Size(33, 15);
             label4.TabIndex = 26;
@@ -196,7 +202,7 @@
             // 
             // numericUpDownId
             // 
-            numericUpDownId.Location = new Point(13, 70);
+            numericUpDownId.Location = new Point(12, 58);
             numericUpDownId.Name = "numericUpDownId";
             numericUpDownId.Size = new Size(120, 23);
             numericUpDownId.TabIndex = 27;
@@ -204,7 +210,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(12, 271);
+            label5.Location = new Point(13, 236);
             label5.Name = "label5";
             label5.Size = new Size(85, 15);
             label5.TabIndex = 28;
@@ -297,11 +303,61 @@
             button8.UseVisualStyleBackColor = true;
             button8.Click += button8_Click;
             // 
+            // numericUpDown1
+            // 
+            numericUpDown1.Location = new Point(13, 302);
+            numericUpDown1.Name = "numericUpDown1";
+            numericUpDown1.Size = new Size(120, 23);
+            numericUpDown1.TabIndex = 38;
+            numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(12, 284);
+            label9.Name = "label9";
+            label9.Size = new Size(69, 15);
+            label9.TabIndex = 39;
+            label9.Text = "Category ID";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(149, 284);
+            label10.Name = "label10";
+            label10.Size = new Size(73, 15);
+            label10.TabIndex = 40;
+            label10.Text = "1: Telephone";
+            label10.Click += label10_Click;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(149, 299);
+            label11.Name = "label11";
+            label11.Size = new Size(42, 15);
+            label11.TabIndex = 41;
+            label11.Text = "2: Ipad";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(149, 313);
+            label12.Name = "label12";
+            label12.Size = new Size(49, 15);
+            label12.TabIndex = 42;
+            label12.Text = "3: Other";
+            // 
             // AdminForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label12);
+            Controls.Add(label11);
+            Controls.Add(label10);
+            Controls.Add(label9);
+            Controls.Add(numericUpDown1);
             Controls.Add(button6);
             Controls.Add(button5);
             Controls.Add(button7);
@@ -334,6 +390,7 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDownStock).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownId).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -366,5 +423,10 @@
         private Button button5;
         private Button button7;
         private Button button8;
+        private NumericUpDown numericUpDown1;
+        private Label label9;
+        private Label label10;
+        private Label label11;
+        private Label label12;
     }
 }
