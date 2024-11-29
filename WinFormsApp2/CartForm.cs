@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SQLite; // Sử dụng SQLite
 using System.Windows.Forms;
 
 namespace WinFormsApp2
@@ -10,13 +8,15 @@ namespace WinFormsApp2
     {
         private List<ListCart.Cart> carts;
         private ListCart listCart;
-        public int ClientID;//userID
+        public int ClientID; // User ID
         public int clientID1;
+        private DatabaseAccess dbAccess;
 
         public CartForm(int clientID)
         {
             this.ClientID = clientID;
             InitializeComponent();
+            dbAccess = new DatabaseAccess(); // Initialize database access
             LoadData();
         }
 
@@ -25,8 +25,7 @@ namespace WinFormsApp2
             listCart = new ListCart();
             carts = listCart.ClientGetCart(this.ClientID);
             dataGridView1.DataSource = carts;
-            label2.Text = "Total Sum: " + listCart.sum.ToString();
-           // dataGridView1.Columns["clientID"].Visible = false;
+            label2.Text = "Total Sum: " + listCart.Sum.ToString("C"); // Display sum in currency format
         }
 
         private void ClearInputFields()
@@ -36,19 +35,19 @@ namespace WinFormsApp2
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            Application.Exit(); // Exit the application
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             ClientForm form1 = new ClientForm(ClientID);
             this.Hide();
-            form1.Show();
+            form1.Show(); // Show the client form
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            decimal Id = numericUpDown1.Value;
+            int Id = (int)numericUpDown1.Value; // Convert to int
             listCart.DeleteCart(Id);
             LoadData();
             ClearInputFields();
@@ -58,38 +57,28 @@ namespace WinFormsApp2
         {
             List<OrderItem> orderItems = new List<OrderItem>();
 
-                foreach (DataGridViewRow row in dataGridView1.Rows)
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (!row.IsNewRow)
                 {
-                    if (!row.IsNewRow)
+                    OrderItem orderItem = new OrderItem
                     {
-                        int clientID = Convert.ToInt32(row.Cells["clientID"].Value);
-                        int productId = Convert.ToInt32(row.Cells["ProductID"].Value);
-                        string productName = row.Cells["ProductName"].Value.ToString();
-                        decimal price = Convert.ToDecimal(row.Cells["Price"].Value);
-                        int quantity = Convert.ToInt32(row.Cells["Quantity"].Value);
-                        decimal total = Convert.ToDecimal(row.Cells["Total"].Value);
-                        DateTime dateAdded = Convert.ToDateTime(row.Cells["DateAdded"].Value);
-
-                        OrderItem orderItem = new OrderItem
-                        {
-                            clientID = clientID,
-                            ProductID = productId,
-                            ProductName = productName,
-                            Price = price,
-                            Quantity = quantity,
-                            Total = total,
-                            DateAdded = dateAdded
-
-                        };
-                        clientID1= clientID;
-                        orderItems.Add(orderItem);
-                    }
+                        clientID = Convert.ToInt32(row.Cells["clientID"].Value),
+                        ProductID = Convert.ToInt32(row.Cells["ProductID"].Value),
+                        ProductName = row.Cells["ProductName"].Value.ToString(),
+                        Price = Convert.ToDecimal(row.Cells["Price"].Value),
+                        Quantity = Convert.ToInt32(row.Cells["Quantity"].Value),
+                        Total = Convert.ToDecimal(row.Cells["Total"].Value),
+                        DateAdded = DateTime.Now // Use current time
+                    };
+                    clientID1 = orderItem.clientID;
+                    orderItems.Add(orderItem);
                 }
+            }
 
-            // Kiểm tra nếu danh sách orderItems không rỗng
             if (orderItems.Count == 0)
             {
-                MessageBox.Show("Корзина пуста! Пожалуйста, добавьте товары перед заказом.", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("The cart is empty! Please add products before ordering.", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -97,86 +86,41 @@ namespace WinFormsApp2
             listCart.DeleteAllCart(clientID1);
             LoadData();
             ClearInputFields();
-            MessageBox.Show("Заказ успешно размещен!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Order placed successfully!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void SaveOrderItemsToDatabase(List<OrderItem> orderItems)
         {
-            try
+            foreach (var item in orderItems)
             {
-                using (SQLiteConnection connection = new SQLiteConnection($"Data Source=\"ComputerStote.db\";"))
+                string insertQuery = "INSERT INTO [Order] (ClientID, ProductID, ProductName, Price, Quantity, Total, DateAdded) " +
+                                     "VALUES (@ClientID, @ProductID, @ProductName, @Price, @Quantity, @Total, @DateAdded)";
+
+                dbAccess.ExecuteNonQuery(insertQuery, command =>
                 {
-                    connection.Open();
+                    command.Parameters.AddWithValue("@ClientID", item.clientID);
+                    command.Parameters.AddWithValue("@ProductID", item.ProductID);
+                    command.Parameters.AddWithValue("@ProductName", item.ProductName);
+                    command.Parameters.AddWithValue("@Price", item.Price);
+                    command.Parameters.AddWithValue("@Quantity", item.Quantity);
+                    command.Parameters.AddWithValue("@Total", item.Total);
+                    command.Parameters.AddWithValue("@DateAdded", DateTime.Now);
+                });
 
-                    foreach (var item in orderItems)
-                    {
-                        string query = "INSERT INTO [Order] (ClientID, ProductID, ProductName, Price, Quantity, Total, DateAdded) " +
-                                       "VALUES (@ClientID, @ProductID, @ProductName, @Price, @Quantity, @Total, @DateAdded)";
+                string updateQuery = "UPDATE Product SET StockQuantity = StockQuantity - @Quantity WHERE ProductID = @ProductID";
 
-                        using (SQLiteCommand command = new SQLiteCommand(query, connection))
-                        {
-                            command.Parameters.AddWithValue("@ClientID", item.clientID);
-                            command.Parameters.AddWithValue("@ProductID", item.ProductID);
-                            command.Parameters.AddWithValue("@ProductName", item.ProductName);
-                            command.Parameters.AddWithValue("@Price", item.Price);
-                            command.Parameters.AddWithValue("@Quantity", item.Quantity);
-                            command.Parameters.AddWithValue("@Total", item.Total);
-                            command.Parameters.AddWithValue("@DateAdded", DateTime.Now); // Hoặc item.DateAdded nếu bạn muốn lưu thời gian cụ thể
-
-                            command.ExecuteNonQuery();
-                        }
-                        string updateQuery = "UPDATE Product SET StockQuantity = StockQuantity - @Quantity WHERE ProductID = @ProductID";
-
-                        using (SQLiteCommand updateCommand = new SQLiteCommand(updateQuery, connection))
-                        {
-                            updateCommand.Parameters.AddWithValue("@Quantity", item.Quantity);
-                            updateCommand.Parameters.AddWithValue("@ProductID", item.ProductID);
-
-                            int rowsAffected = updateCommand.ExecuteNonQuery();
-                            if (rowsAffected == 0)
-                            {
-                                MessageBox.Show($"Не удалось обновить количество на складе для продукта ID: {item.ProductID}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            }
-                        }
-                        // Check for stock quantity and delete if necessary
-                        string checkQuery = "SELECT StockQuantity FROM Product WHERE ProductID = @ProductID";
-
-                        using (SQLiteCommand checkCommand = new SQLiteCommand(checkQuery, connection))
-                        {
-                            checkCommand.Parameters.AddWithValue("@ProductID", item.ProductID);
-                            object stockQuantityObj = checkCommand.ExecuteScalar();
-
-                            if (stockQuantityObj != null && Convert.ToInt32(stockQuantityObj) <= 0)
-                            {
-                                // Delete the product if stock quantity is zero
-                                string deleteQuery = "DELETE FROM Product WHERE ProductID = @ProductID";
-
-                                using (SQLiteCommand deleteCommand = new SQLiteCommand(deleteQuery, connection))
-                                {
-                                    deleteCommand.Parameters.AddWithValue("@ProductID", item.ProductID);
-                                    deleteCommand.ExecuteNonQuery();
-                                }
-
-                                //MessageBox.Show($"Продукт ID: {item.ProductID} был удален из базы данных, так как его количество на складе достигло нуля.", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                        }
-                    }
-                }
-
-                MessageBox.Show("Заказ успешно сохранен!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                dbAccess.ExecuteNonQuery(updateQuery, command =>
+                {
+                    command.Parameters.AddWithValue("@Quantity", item.Quantity);
+                    command.Parameters.AddWithValue("@ProductID", item.ProductID);
+                });
             }
-            catch (SQLiteException ex)
-            {
-                MessageBox.Show($"При сохранении заказа произошла ошибка: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
+            MessageBox.Show("Order saved successfully!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 
-    // Định nghĩa lớp OrderItem
+    // Define the OrderItem class
     public class OrderItem
     {
         public int orderID { get; set; }

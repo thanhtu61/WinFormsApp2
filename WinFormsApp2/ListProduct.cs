@@ -1,51 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Diagnostics;
-using System.Xml.Linq;
+using System.Windows.Forms;
 
 namespace WinFormsApp2
 {
     public class ListProduct
     {
-        //private const string ConnectionString = $"Data Source=ComputerStore.db;Version=3;";
+        private DatabaseAccess dbAccess;
 
-        public List<Product> GetProducts()
+        public ListProduct()
+        {
+            dbAccess = new DatabaseAccess();
+        }
+
+        public List<Product> GetProducts(int? categoryId = null)
         {
             List<Product> listProducts = new List<Product>();
+            string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity, Categoryid FROM Product";
+
+            if (categoryId.HasValue)
+            {
+                query += " WHERE Categoryid = @Categoryid;";
+            }
 
             try
             {
-                string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
-
-                using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
-               
+                dbAccess.ExecuteReader(query, command =>
                 {
-                    connection.Open();
-                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity,Categoryid FROM Product;";
-
-                    using (var command = new SQLiteCommand(query, connection))
-                    using (var reader = command.ExecuteReader())
+                    if (categoryId.HasValue)
                     {
-                        while (reader.Read())
-                        {
-                            var product = new Product
-                            {
-                                IdProduct = reader.GetInt32(0),
-                                ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
-                                Description = reader.IsDBNull(2) ? null : reader.GetString(2),
-                                Price = reader.GetDecimal(3),
-                                StockQuantity = reader.GetInt32(4),
-                                Category = reader.GetInt32(5)
-                            };
-                            listProducts.Add(product);
-                        }
+                        command.Parameters.AddWithValue("@Categoryid", categoryId.Value);
                     }
-                }
-            }
-            catch (SQLiteException ex)
-            {
-                MessageBox.Show($"Database error: {ex.Message}");
+                },
+                reader =>
+                {
+                    var product = new Product
+                    {
+                        IdProduct = reader.GetInt32(0),
+                        ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
+                        Description = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        Price = reader.GetDecimal(3),
+                        StockQuantity = reader.GetInt32(4),
+                        Category = reader.GetInt32(5)
+                    };
+                    listProducts.Add(product);
+                });
             }
             catch (Exception ex)
             {
@@ -54,197 +53,65 @@ namespace WinFormsApp2
 
             return listProducts;
         }
-        public List<Product> GetProducts1()
-        {
-            List<Product> listProducts = new List<Product>();
 
-            try
-            {
-                string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
-
-                using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
-
-                {
-                    connection.Open();
-                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity,Categoryid FROM Product WHERE Categoryid=1;";
-
-                    using (var command = new SQLiteCommand(query, connection))
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var product = new Product
-                            {
-                                IdProduct = reader.GetInt32(0),
-                                ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
-                                Description = reader.IsDBNull(2) ? null : reader.GetString(2),
-                                Price = reader.GetDecimal(3),
-                                StockQuantity = reader.GetInt32(4),
-                                Category = reader.GetInt32(5)
-                            };
-                            listProducts.Add(product);
-                        }
-                    }
-                }
-            }
-            catch (SQLiteException ex)
-            {
-                MessageBox.Show($"Database error: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}");
-            }
-
-            return listProducts;
-        }
-        public List<Product> GetProducts2()
-        {
-            List<Product> listProducts = new List<Product>();
-
-            try
-            {
-                string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
-
-                using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
-
-                {
-                    connection.Open();
-                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity,Categoryid FROM Product WHERE Categoryid=2;";
-
-                    using (var command = new SQLiteCommand(query, connection))
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var product = new Product
-                            {
-                                IdProduct = reader.GetInt32(0),
-                                ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
-                                Description = reader.IsDBNull(2) ? null : reader.GetString(2),
-                                Price = reader.GetDecimal(3),
-                                StockQuantity = reader.GetInt32(4),
-                                Category = reader.GetInt32(5)
-                            };
-                            listProducts.Add(product);
-                        }
-                    }
-                }
-            }
-            catch (SQLiteException ex)
-            {
-                MessageBox.Show($"Database error: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}");
-            }
-
-            return listProducts;
-        }
-        public List<Product> GetProducts3()
-        {
-            List<Product> listProducts = new List<Product>();
-
-            try
-            {
-                string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
-
-                using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
-
-                {
-                    connection.Open();
-                    string query = "SELECT ProductId, ProductName, Description, Price, StockQuantity, Categoryid FROM Product WHERE Categoryid=3;";
-
-                    using (var command = new SQLiteCommand(query, connection))
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var product = new Product
-                            {
-                                IdProduct = reader.GetInt32(0),
-                                ProductName = reader.IsDBNull(1) ? null : reader.GetString(1),
-                                Description = reader.IsDBNull(2) ? null : reader.GetString(2),
-                                Price = reader.GetDecimal(3),
-                                StockQuantity = reader.GetInt32(4),
-                                Category = reader.GetInt32(5)
-                            };
-                            listProducts.Add(product);
-                        }
-                    }
-                }
-            }
-            catch (SQLiteException ex)
-            {
-                MessageBox.Show($"Database error: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}");
-            }
-
-            return listProducts;
-        }
-       
         internal void AddProduct(Product product)
         {
-            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
-
-            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+            string query = "INSERT INTO Product (ProductName, Description, Price, StockQuantity, Categoryid) VALUES (@ProductName, @Description, @Price, @StockQuantity, @Categoryid)";
+            try
             {
-                connection.Open();
-                string query = "INSERT INTO Product (ProductName, Description, Price, StockQuantity, Categoryid ) VALUES (@ProductName, @Description, @Price, @StockQuantity, @Category)";
-                using (var command = new SQLiteCommand(query, connection))
+                dbAccess.ExecuteNonQuery(query, command =>
                 {
                     command.Parameters.AddWithValue("@ProductName", product.ProductName);
                     command.Parameters.AddWithValue("@Description", product.Description);
                     command.Parameters.AddWithValue("@Price", product.Price);
                     command.Parameters.AddWithValue("@StockQuantity", product.StockQuantity);
-                    command.Parameters.AddWithValue("@Category", product.Category);
-                    command.ExecuteNonQuery();
-                }
+                    command.Parameters.AddWithValue("@Categoryid", product.Category);
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
 
-        internal void DeleteProduct(decimal idProduct)
+        internal void DeleteProduct(int idProduct)
         {
-            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
-
-            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+            string query = "DELETE FROM Product WHERE ProductId = @ProductId";
+            try
             {
-                connection.Open();
-                string query = "DELETE FROM Product WHERE ProductId = @ProductId";
-                using (var command = new SQLiteCommand(query, connection))
+                dbAccess.ExecuteNonQuery(query, command =>
                 {
                     command.Parameters.AddWithValue("@ProductId", idProduct);
-                    command.ExecuteNonQuery();
-                }
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
 
-        internal void UpdateProduct(decimal idProduct, String Name, String Description,decimal Price,decimal Stock)
+        internal void UpdateProduct(int idProduct, string name, string description, decimal price, int stock)
         {
-            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
-
-            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+            string query = "UPDATE Product SET ProductName = @ProductName, Description = @Description, Price = @Price, StockQuantity = @StockQuantity WHERE ProductId = @ProductId";
+            try
             {
-                connection.Open();
-                string query = "UPDATE Product SET ProductName = @ProductName, Description = @Description, Price = @Price, StockQuantity = @StockQuantity WHERE ProductId = @ProductId";
-                using (var command = new SQLiteCommand(query, connection))
+                dbAccess.ExecuteNonQuery(query, command =>
                 {
                     command.Parameters.AddWithValue("@ProductId", idProduct);
-                    command.Parameters.AddWithValue("@ProductName", Name);
-                    command.Parameters.AddWithValue("@Description", Description);
-                    command.Parameters.AddWithValue("@Price", Price);
-                    command.Parameters.AddWithValue("@StockQuantity",Stock);
-                    command.ExecuteNonQuery();
-                }
+                    command.Parameters.AddWithValue("@ProductName", name);
+                    command.Parameters.AddWithValue("@Description", description);
+                    command.Parameters.AddWithValue("@Price", price);
+                    command.Parameters.AddWithValue("@StockQuantity", stock);
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
     }
-   
-public class Product
+
+    public class Product
     {
         public int IdProduct { get; set; }
         public string ProductName { get; set; }

@@ -1,58 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Windows.Forms; // Make sure to include this for MessageBox
+using System.Data.SqlClient;
+using System.Windows.Forms; // Necessary for MessageBox
 
 namespace WinFormsApp2
 {
     public class ListCart
     {
-        public decimal sum;
+        public decimal Sum { get; private set; } // Use a property for sum
+        private DatabaseAccess dbAccess; // Instance of DatabaseAccess
+
+        public ListCart()
+        {
+            dbAccess = new DatabaseAccess(); // Initialize DatabaseAccess
+        }
 
         public List<Cart> ClientGetCart(int clientId)
         {
-
             List<Cart> listCarts = new List<Cart>();
+            Sum = 0; // Initialize sum
+
+            string query = "SELECT ClientID, CartID, Cart.ProductID, ProductName, Price, Quantity, (Price * Quantity) AS Total, DateAdded FROM Cart JOIN Product ON Cart.ProductID = Product.ProductID WHERE ClientID = @clientId;";
 
             try
             {
-                string dbPath = "ComputerStote.db"; // Ensure the database path is correct
-
-                using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+                // Use DatabaseAccess to execute the query and read data
+                dbAccess.ExecuteReader<Cart>(query, command =>
                 {
-                    connection.Open();
-                    string query = "SELECT clientId, CartID, cart.ProductID,ProductName,PRICE, Quantity, (PRICE * Quantity) AS Total,  DateAdded  FROM cart JOIN Product ON CART.ProductID=PRODUCT.ProductID WHERE ClientID = @clientID;";
-                    using (var command = new SQLiteCommand(query, connection))
+                    command.Parameters.AddWithValue("@clientId", clientId);
+                }, reader =>
+                {
+                    var cart = new Cart
                     {
-                        command.Parameters.AddWithValue("@clientID", clientId);
-
-                        using (var reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                var cart = new Cart
-                                {
-                                    ClientId = reader.GetInt32(0),
-                                    CartId = reader.GetInt32(1),
-                                    ProductId = reader.GetInt32(2),
-                                    ProductName = reader.IsDBNull(3) ? null : reader.GetString(3),
-                                    Price = reader.GetDecimal(4),
-                                    Quantity = reader.GetInt32(5),
-                                    Total=reader.GetDecimal(6),
-                                    DateAdded = reader.GetDateTime(7),
-                                    
-
-                                };
-                                sum += cart.Total;
-                                listCarts.Add(cart);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (SQLiteException ex)
-            {
-                MessageBox.Show($"Database error: {ex.Message}");
+                        ClientId = reader.GetInt32(0),
+                        CartId = reader.GetInt32(1),
+                        ProductId = reader.GetInt32(2),
+                        ProductName = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        Price = reader.GetDecimal(4),
+                        Quantity = reader.GetInt32(5),
+                        Total = reader.GetDecimal(6),
+                        DateAdded = reader.GetDateTime(7),
+                    };
+                    Sum += cart.Total; // Accumulate total
+                    return cart; // Return the created Cart object
+                });
             }
             catch (Exception ex)
             {
@@ -62,75 +53,57 @@ namespace WinFormsApp2
             return listCarts;
         }
 
-        internal void DeleteCart(decimal id)
+        internal void DeleteCart(int cartId)
         {
-            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
-
-            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
-            {
-                connection.Open();
-                string query = "delete from cart where CartID=@CartID;";
-                using (var command = new SQLiteCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@CartID",id);
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        
-        internal void DeleteAllCart(int id)
-        {
-            string dbPath = "ComputerStote.db"; // Ensure the path is correct
-
+            string query = "DELETE FROM Cart WHERE CartID = @CartID;";
             try
             {
-                using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+                dbAccess.ExecuteNonQuery(query, command =>
                 {
-                    connection.Open();
-                    string query = "DELETE FROM cart WHERE ClientID = @ClientID;";
-                    using (var command = new SQLiteCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@ClientID", id);
-                        int rowsAffected = command.ExecuteNonQuery();
-                        if (rowsAffected == 0)
-                        {
-                            // Optionally handle the case where no rows were deleted
-                            Console.WriteLine("No records found for the given ClientID.");
-                        }
-                    }
-                }
-            }
-            catch (SQLiteException ex)
-            {
-                // Handle database-related exceptions
-                Console.WriteLine($"Database error: {ex.Message}");
+                    command.Parameters.AddWithValue("@CartID", cartId);
+                });
             }
             catch (Exception ex)
             {
-                // Handle other exceptions
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
+
+        internal void DeleteAllCart(int clientId)
+        {
+            string query = "DELETE FROM Cart WHERE ClientID = @ClientID;";
+            try
+            {
+                dbAccess.ExecuteNonQuery(query, command =>
+                {
+                    command.Parameters.AddWithValue("@ClientID", clientId);
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+        }
+
         public class Cart
         {
             public int CartId { get; set; }
             public int ClientId { get; set; }
             public int ProductId { get; set; }
-            public String ProductName { get; set; }
+            public string ProductName { get; set; }
             public decimal Price { get; set; }
             public int Quantity { get; set; }
             public decimal Total { get; set; }
             public DateTime DateAdded { get; set; }
 
-            public Cart(int cartId, int clientId, int productId,String ProductName, decimal Price, decimal Total, int quantity, DateTime dateAdded)
+            public Cart(int cartId, int clientId, int productId, string productName, decimal price, decimal total, int quantity, DateTime dateAdded)
             {
-                CartId = cartId; // Fixed the assignment
+                CartId = cartId;
                 ClientId = clientId;
                 ProductId = productId;
-                ProductName = ProductName;
-                Price = Price;
-                Total = Total;
+                ProductName = productName;
+                Price = price;
+                Total = total;
                 Quantity = quantity;
                 DateAdded = dateAdded;
             }

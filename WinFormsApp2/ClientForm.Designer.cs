@@ -55,7 +55,7 @@
             button1.TabIndex = 1;
             button1.Text = "Previous";
             button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click_1;
+           // button1.Click += button1_Click_1;
             // 
             // button2
             // 
@@ -75,7 +75,7 @@
             btnSortByPrice.TabIndex = 3;
             btnSortByPrice.Text = "Sort by price";
             btnSortByPrice.UseVisualStyleBackColor = true;
-            btnSortByPrice.Click += btnSortByPrice_Click_1;
+            //btnSortByPrice.Click += btnSortByPrice_Click_1;
             // 
             // dataGridView1
             // 

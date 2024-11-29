@@ -70,7 +70,7 @@ namespace WinFormsApp2
         private void btnDelete_Click(object sender, EventArgs e)
         {
 
-            decimal Id = numericUpDownId.Value;
+            int Id = (int)numericUpDownId.Value;
             listProduct.DeleteProduct(Id);
             LoadData();
             ClearInputFields();
@@ -81,11 +81,11 @@ namespace WinFormsApp2
         private void btnEdit_Click(object sender, EventArgs e)
         {
 
-            decimal Id = numericUpDownId.Value;
+            int Id = (int)numericUpDownId.Value;
             string Name = textBoxName.Text;
             string Description = textBoxDescription.Text;
             decimal Price = numericUpDownPrice.Value;
-            decimal Stock = numericUpDownStock.Value;
+            int Stock = (int)numericUpDownStock.Value;
 
             listProduct.UpdateProduct(Id, Name, Description, Price, Stock);
             LoadData();
@@ -136,21 +136,21 @@ namespace WinFormsApp2
         private void button8_Click(object sender, EventArgs e)
         {
             listProduct = new ListProduct();
-            products = listProduct.GetProducts1();
+            products = listProduct.GetProducts(1);
             dataGridView1.DataSource = products;
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
             listProduct = new ListProduct();
-            products = listProduct.GetProducts2();
+            products = listProduct.GetProducts(2);
             dataGridView1.DataSource = products;
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             listProduct = new ListProduct();
-            products = listProduct.GetProducts3();
+            products = listProduct.GetProducts(3);
             dataGridView1.DataSource = products;
         }
 

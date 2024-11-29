@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SQLite;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinFormsApp2
 {
     public partial class ClientLogin : Form
     {
-        int clientID;
+        private int clientID;
+        private DatabaseAccess dbAccess; // Create a database access instance
+
         public ClientLogin()
         {
             InitializeComponent();
+            dbAccess = new DatabaseAccess(); // Initialize DatabaseAccess
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -24,80 +20,60 @@ namespace WinFormsApp2
             string username = textBox1.Text;
             string password = textBox2.Text;
 
-            // Giả sử bạn có một hàm kiểm tra thông tin đăng nhập
-            if (CheckLogin(username, password)!=0)
+            // Check login credentials
+            clientID = CheckLogin(username, password);
+            if (clientID != 0)
             {
-                // Nếu thông tin đăng nhập đúng, mở form AdminForm
-                clientID = CheckLogin(username, password);
+                // If login is successful, open ClientForm
                 ClientForm clientForm = new ClientForm(clientID);
                 clientForm.Show();
-                this.Hide(); // Ẩn form đăng nhập
+                this.Hide(); // Hide the login form
             }
             else
             {
-                // Nếu thông tin đăng nhập không đúng, hiển thị thông báo
-                MessageBox.Show("Имя пользователя или пароль неверны. Пожалуйста, войдите еще раз.", "Ошибка входа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // If login fails, display an error message
+                MessageBox.Show("Username or password is incorrect. Please try again.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            // Chuyển sang CreateAccountActivityForm
+            // Navigate to CreateAccountActivityForm
             CreateAccountActivityForm createAccountForm = new CreateAccountActivityForm();
             createAccountForm.Show();
-            this.Hide(); // Ẩn form đăng nhập
+            this.Hide(); // Hide the login form
         }
 
         private int CheckLogin(string username, string password)
         {
-            // Đường dẫn đến cơ sở dữ liệu của bạn
-            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
+            // SQL query to check login credentials
+            string query = "SELECT Client.ClientID FROM Client JOIN [User] ON Client.UserID = [User].UserID WHERE Username = @username AND Password = @password";
 
-            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+            // Use DatabaseAccess to execute the query and return the client ID
+            var result = dbAccess.ExecuteScalar<int>(query, command =>
             {
-                connection.Open();
+                command.Parameters.AddWithValue("@username", username);
+                command.Parameters.AddWithValue("@password", password);
+            });
 
-                // Truy vấn để kiểm tra thông tin đăng nhập
-                string query = "select * from Client join [user] on Client.UserID= [user].UserID WHERE Username = @username AND Password = @password";
-                using (var command = new SQLiteCommand(query, connection))
-                {
-                    // Thêm tham số vào câu lệnh
-                    command.Parameters.AddWithValue("@username", username);
-                    command.Parameters.AddWithValue("@password", password);
-
-                    // Thực hiện truy vấn và kiểm tra kết quả
-                    using (var reader = command.ExecuteReader())
-                    {
-                        if (reader.Read()) // Nếu có ít nhất một dòng kết quả
-                        {
-                            clientID = reader.GetInt32(0);
-                            return clientID; // Đăng nhập thành công
-                        }
-                        else
-                        {
-
-                            return 0; // Đăng nhập thất bại
-                        }
-                    }
-                }
-            }
+            return result; // Return the client ID or 0 if not found
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             Form1 form1 = new Form1();
             this.Hide();
-            form1.Show();
+            form1.Show(); // Show the main form
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            Application.Exit(); // Exit the application
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
+            // Logic to handle text box changes if needed
         }
     }
 }

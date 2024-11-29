@@ -1,48 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Diagnostics;
-using System.Xml.Linq;
+using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace WinFormsApp2
 {
     public class ListClient
     {
-        //private const string ConnectionString = $"Data Source=ComputerStore.db;Version=3;";
+        private DatabaseAccess dbAccess;
+
+        public ListClient()
+        {
+            dbAccess = new DatabaseAccess();
+        }
 
         public List<Client> GetClients()
         {
             List<Client> listClients = new List<Client>();
+            string query = "SELECT ClientId, ClientName, Description, Price, StockQuantity FROM Client;";
 
             try
             {
-                string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
-
-                using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
-
+                dbAccess.ExecuteReader<Client>(query, command => { }, reader =>
                 {
-                    connection.Open();
-                    string query = "SELECT ClientId, ClientName, Description, Price, StockQuantity FROM Client;";
-
-                    using (var command = new SQLiteCommand(query, connection))
-                    using (var reader = command.ExecuteReader())
+                    // Create a new Client object for each row
+                    var client = new Client
                     {
-                        while (reader.Read())
-                        {
-                            var Client = new Client
-                            {
-                                IdClient = reader.GetInt32(0),
-                                ClientName = reader.IsDBNull(1) ? null : reader.GetString(1),
-                                Description = reader.IsDBNull(2) ? null : reader.GetString(2),
-                                Price = reader.GetDecimal(3),
-                                StockQuantity = reader.GetInt32(4)
-                            };
-                            listClients.Add(Client);
-                        }
-                    }
-                }
+                        IdClient = reader.GetInt32(0), // ClientId
+                        ClientName = reader.IsDBNull(1) ? null : reader.GetString(1), // ClientName
+                        Description = reader.IsDBNull(2) ? null : reader.GetString(2), // Description
+                        Price = reader.GetDecimal(3), // Price
+                        StockQuantity = reader.GetInt32(4) // StockQuantity
+                    };
+                    listClients.Add(client); // Add the client to the list
+                    return client; // Return the client object
+                });
             }
-            catch (SQLiteException ex)
+            catch (SqlException ex)
             {
                 MessageBox.Show($"Database error: {ex.Message}");
             }
@@ -53,85 +47,108 @@ namespace WinFormsApp2
 
             return listClients;
         }
+
         public List<Client> SortClient()
         {
-            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
             List<Client> listClients = new List<Client>();
-            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+            string query = "SELECT ClientId, ClientName, Description, Price, StockQuantity FROM Client ORDER BY Price;";
+
+            try
             {
-                connection.Open();
-                string query = "SELECT ClientId, ClientName, Description, Price, StockQuantity FROM Client order by Price";
-                using (var command = new SQLiteCommand(query, connection))
-                using (var reader = command.ExecuteReader())
+                dbAccess.ExecuteReader<Client>(query, command => { }, reader =>
                 {
-                    while (reader.Read())
+                    // Create a new Client object for each row
+                    var client = new Client
                     {
-                        Client Client = new Client
-                        {
-                            IdClient = reader.GetInt32(0),
-                            ClientName = reader.IsDBNull(1) ? null : reader.GetString(1),
-                            Description = reader.IsDBNull(2) ? null : reader.GetString(2),
-                            Price = reader.GetDecimal(3),
-                            StockQuantity = reader.GetInt32(4)
-                        };
-                        listClients.Add(Client);
-                    }
-                }
+                        IdClient = reader.GetInt32(0), // ClientId
+                        ClientName = reader.IsDBNull(1) ? null : reader.GetString(1), // ClientName
+                        Description = reader.IsDBNull(2) ? null : reader.GetString(2), // Description
+                        Price = reader.GetDecimal(3), // Price
+                        StockQuantity = reader.GetInt32(4) // StockQuantity
+                    };
+                    listClients.Add(client); // Add the client to the list
+                    return client; // Return the client object
+                });
             }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+
             return listClients;
         }
-        internal void AddClient(Client Client)
-        {
-            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
 
-            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+        internal void AddClient(Client client)
+        {
+            string query = "INSERT INTO Client (ClientName, Description, Price, StockQuantity) VALUES (@ClientName, @Description, @Price, @StockQuantity)";
+
+            try
             {
-                connection.Open();
-                string query = "INSERT INTO Client (ClientName, Description, Price, StockQuantity) VALUES (@ClientName, @Description, @Price, @StockQuantity)";
-                using (var command = new SQLiteCommand(query, connection))
+                dbAccess.ExecuteNonQuery(query, command =>
                 {
-                    command.Parameters.AddWithValue("@ClientName", Client.ClientName);
-                    command.Parameters.AddWithValue("@Description", Client.Description);
-                    command.Parameters.AddWithValue("@Price", Client.Price);
-                    command.Parameters.AddWithValue("@StockQuantity", Client.StockQuantity);
-                    command.ExecuteNonQuery();
-                }
+                    command.Parameters.AddWithValue("@ClientName", client.ClientName);
+                    command.Parameters.AddWithValue("@Description", client.Description);
+                    command.Parameters.AddWithValue("@Price", client.Price);
+                    command.Parameters.AddWithValue("@StockQuantity", client.StockQuantity);
+                });
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
 
-        internal void DeleteClient(decimal idClient)
+        internal void DeleteClient(int idClient)
         {
-            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
+            string query = "DELETE FROM Client WHERE ClientId = @ClientId";
 
-            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+            try
             {
-                connection.Open();
-                string query = "DELETE FROM Client WHERE ClientId = @ClientId";
-                using (var command = new SQLiteCommand(query, connection))
+                dbAccess.ExecuteNonQuery(query, command =>
                 {
                     command.Parameters.AddWithValue("@ClientId", idClient);
-                    command.ExecuteNonQuery();
-                }
+                });
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
 
-        internal void UpdateClient(decimal idClient, String Name, String Description, decimal Price, decimal Stock)
+        internal void UpdateClient(int idClient, string name, string description, decimal price, int stock)
         {
-            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
+            string query = "UPDATE Client SET ClientName = @ClientName, Description = @Description, Price = @Price, StockQuantity = @StockQuantity WHERE ClientId = @ClientId";
 
-            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+            try
             {
-                connection.Open();
-                string query = "UPDATE Client SET ClientName = @ClientName, Description = @Description, Price = @Price, StockQuantity = @StockQuantity WHERE ClientId = @ClientId";
-                using (var command = new SQLiteCommand(query, connection))
+                dbAccess.ExecuteNonQuery(query, command =>
                 {
                     command.Parameters.AddWithValue("@ClientId", idClient);
-                    command.Parameters.AddWithValue("@ClientName", Name);
-                    command.Parameters.AddWithValue("@Description", Description);
-                    command.Parameters.AddWithValue("@Price", Price);
-                    command.Parameters.AddWithValue("@StockQuantity", Stock);
-                    command.ExecuteNonQuery();
-                }
+                    command.Parameters.AddWithValue("@ClientName", name);
+                    command.Parameters.AddWithValue("@Description", description);
+                    command.Parameters.AddWithValue("@Price", price);
+                    command.Parameters.AddWithValue("@StockQuantity", stock);
+                });
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
     }

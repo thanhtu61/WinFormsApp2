@@ -1,49 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Windows.Forms;
 
 namespace WinFormsApp2
 {
     public class ListOrder
     {
-        private const string ConnectionString = "Data Source=ComputerStote.db;Version=3;"; // Đảm bảo tên tệp là chính xác
+        private DatabaseAccess dbAccess;
+
+        public ListOrder()
+        {
+            dbAccess = new DatabaseAccess();
+        }
 
         public List<Order> GetOrders()
         {
             List<Order> listOrders = new List<Order>();
+            string query = "SELECT * FROM [Order];";
 
             try
             {
-                using (var connection = new SQLiteConnection(ConnectionString))
+                dbAccess.ExecuteReader(query, command => { }, reader =>
                 {
-                    connection.Open();
-                    string query = "SELECT * FROM [Order];";
-
-                    using (var command = new SQLiteCommand(query, connection))
-                    using (var reader = command.ExecuteReader())
+                    var order = new Order
                     {
-                        while (reader.Read())
-                        {
-                            var order = new Order
-                            {
-                                orderID = reader.GetInt32(reader.GetOrdinal("OrderID")), // Sử dụng GetOrdinal
-                                clientID = reader.GetInt32(reader.GetOrdinal("ClientID")),
-                                ProductID = reader.GetInt32(reader.GetOrdinal("ProductID")),
-                                ProductName = reader.IsDBNull(reader.GetOrdinal("ProductName")) ? null : reader.GetString(reader.GetOrdinal("ProductName")),
-                                Price = reader.GetDecimal(reader.GetOrdinal("Price")),
-                                Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
-                                Total = reader.GetDecimal(reader.GetOrdinal("Total")),
-                                DateAdded = reader.GetDateTime(reader.GetOrdinal("DateAdded"))
-                            };
-                            listOrders.Add(order);
-                        }
-                    }
-                }
-            }
-            catch (SQLiteException ex)
-            {
-                MessageBox.Show($"Database error: {ex.Message}");
+                        orderID = reader.GetInt32(reader.GetOrdinal("OrderID")),
+                        clientID = reader.GetInt32(reader.GetOrdinal("ClientID")),
+                        ProductID = reader.GetInt32(reader.GetOrdinal("ProductID")),
+                        ProductName = reader.IsDBNull(reader.GetOrdinal("ProductName")) ? null : reader.GetString(reader.GetOrdinal("ProductName")),
+                        Price = reader.GetDecimal(reader.GetOrdinal("Price")),
+                        Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
+                        Total = reader.GetDecimal(reader.GetOrdinal("Total")),
+                        DateAdded = reader.GetDateTime(reader.GetOrdinal("DateAdded"))
+                    };
+                    listOrders.Add(order); // Add the order to the list
+                });
             }
             catch (Exception ex)
             {
@@ -52,34 +43,25 @@ namespace WinFormsApp2
 
             return listOrders;
         }
-        internal void DeleteOrder(decimal idOrder)
+
+        internal void DeleteOrder(int idOrder) // Changed parameter type to int for consistency
         {
-            string dbPath = "ComputerStote.db"; // Thay đổi đường dẫn đến cơ sở dữ liệu của bạn
+            string query = "DELETE FROM [Order] WHERE OrderID = @idOrder;";
 
-            using (var connection = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
+            try
             {
-                connection.Open();
-
-                // Xóa bản ghi trong bảng Client trước
-                string deleteClientQuery = "DELETE FROM [Order] WHERE OrderId = @idOrder;";
-                using (var clientCommand = new SQLiteCommand(deleteClientQuery, connection))
+                dbAccess.ExecuteNonQuery(query, command =>
                 {
-                    clientCommand.Parameters.AddWithValue("@idOrder", idOrder);
-                    int clientResult = clientCommand.ExecuteNonQuery();
-
-                    if (clientResult > 0)
-                    {
-                        MessageBox.Show("Account deleted successfully!");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Error deleting account. User may not exist.");
-                    }
-                }
-
-          
+                    command.Parameters.AddWithValue("@idOrder", idOrder);
+                });
+                MessageBox.Show("Order deleted successfully!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting order: {ex.Message}");
             }
         }
+
         public class Order
         {
             public int orderID { get; set; }

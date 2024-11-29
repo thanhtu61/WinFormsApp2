@@ -66,7 +66,7 @@ namespace WinFormsApp2
         private void btnDelete_Click(object sender, EventArgs e)
         {
 
-            decimal Id = numericUpDownId.Value;
+            int Id = (int)numericUpDownId.Value;
             listOrder.DeleteOrder(Id);
             LoadData();
             numericUpDownId.Value = 0;

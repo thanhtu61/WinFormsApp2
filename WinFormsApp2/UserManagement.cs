@@ -33,7 +33,7 @@ namespace WinFormsApp2
         }
         private void btnDelete_Click_1(object sender, EventArgs e)
         {
-            decimal Id = numericUpDownId.Value;
+            int Id = (int)numericUpDownId.Value;
             listUser.DeleteUser(Id);
             LoadData();
             ClearInputFields();
@@ -41,7 +41,7 @@ namespace WinFormsApp2
 
         private void btnEdit_Click_1(object sender, EventArgs e)
         {
-            decimal Id = numericUpDownId.Value;
+            int Id = (int)numericUpDownId.Value;
             string Name = textBoxName.Text;
             string Email = textBoxEmail.Text;
             string Password = textBoxPassword.Text;

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\kiem\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj": {}
+    "D:\\kì 5\\СУБД\\hoang\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj": {}
   },
   "projects": {
-    "D:\\kiem\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj": {
+    "D:\\kì 5\\СУБД\\hoang\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\kiem\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj",
+        "projectUniqueName": "D:\\kì 5\\СУБД\\hoang\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj",
         "projectName": "WinFormsApp2",
-        "projectPath": "D:\\kiem\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj",
-        "packagesPath": "C:\\Users\\trant\\.nuget\\packages\\",
-        "outputPath": "D:\\kiem\\WinFormsApp2\\WinFormsApp2\\obj\\",
+        "projectPath": "D:\\kì 5\\СУБД\\hoang\\WinFormsApp2\\WinFormsApp2\\WinFormsApp2.csproj",
+        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+        "outputPath": "D:\\kì 5\\СУБД\\hoang\\WinFormsApp2\\WinFormsApp2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\trant\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -34,6 +34,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -64,7 +69,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
