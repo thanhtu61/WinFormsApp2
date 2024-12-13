@@ -1,19 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace WinFormsApp2
 {
+
     public partial class ClientForm : Form
     {
         private List<Product> products;
         private ListProduct listProduct;
         public int clientID;
         private DatabaseAccess dbAccess; // Create a database access instance
+        string  connectionString = "Server=192.168.101.169;Database=TelephoneStore;User Id=aa;Password=113112111Tien;";
+        public T ExecuteScalar<T>(string query, Action<SqlCommand> prepareCommand)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    prepareCommand(command);
 
+                    var result = command.ExecuteScalar();
+
+                    if (result == null || result == DBNull.Value)
+                    {
+                        return default; // Return default value for type T
+                    }
+
+                    return (T)Convert.ChangeType(result, typeof(T)); // Convert to the desired type
+                }
+            }
+        }
         public ClientForm(int clientID)
         {
             this.clientID = clientID;
@@ -74,14 +96,19 @@ namespace WinFormsApp2
                 // Check stock quantity using DatabaseAccess
                 string stockQuery = "SELECT StockQuantity FROM Product WHERE ProductID = @productId";
 
-                var stockQuantityObj = dbAccess.ExecuteReader(stockQuery, command =>
+                var stockQuantityList = dbAccess.ExecuteReader(stockQuery, command =>
                 {
                     command.Parameters.AddWithValue("@productId", productId);
-                }, reader => reader["StockQuantity"]);
-
-                if (stockQuantityObj != null)
+                }, reader =>
                 {
-                    int stockQuantity = Convert.ToInt32(stockQuantityObj);
+                    // Kiểm tra xem có dữ liệu không trước khi lấy giá trị
+                    return reader["StockQuantity"] != DBNull.Value ? (int?)reader.GetInt32(0) : null;
+                });
+
+                // Kiểm tra nếu có ít nhất một giá trị trong danh sách
+                if (stockQuantityList != null && stockQuantityList.Count > 0)
+                {
+                    int stockQuantity = stockQuantityList[0].Value; // Lấy giá trị đầu tiên
                     if (stockQuantity < quantity)
                     {
                         MessageBox.Show("Cannot add to cart: Insufficient stock available.");

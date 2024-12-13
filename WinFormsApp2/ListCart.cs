@@ -41,8 +41,10 @@ namespace WinFormsApp2
                         Total = reader.GetDecimal(6),
                         DateAdded = reader.GetDateTime(7),
                     };
+
                     Sum += cart.Total; // Accumulate total
-                    return cart; // Return the created Cart object
+                    listCarts.Add(cart); // Add the created Cart object to the list
+                    return cart; // Return the created Cart object (optional)
                 });
             }
             catch (Exception ex)
@@ -50,10 +52,11 @@ namespace WinFormsApp2
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
 
-            return listCarts;
+            return listCarts; // Return the populated list of carts
         }
+    
 
-        internal void DeleteCart(int cartId)
+    internal void DeleteCart(int cartId)
         {
             string query = "DELETE FROM Cart WHERE CartID = @CartID;";
             try

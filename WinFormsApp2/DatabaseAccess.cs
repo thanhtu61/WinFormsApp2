@@ -10,7 +10,7 @@ namespace WinFormsApp2
 
         public DatabaseAccess()
         {
-            connectionString = "Server=192.168.0.102;Database=TelephoneStore;User Id=aa;Password=113112111Tien;";
+            connectionString = "Server=192.168.101.169;Database=TelephoneStore;User Id=aa;Password=113112111Tien;";
         }
 
         public void ExecuteNonQuery(string query, Action<SqlCommand> parameterAction)

@@ -9,7 +9,6 @@ namespace WinFormsApp2
         private List<ListCart.Cart> carts;
         private ListCart listCart;
         public int ClientID; // User ID
-        public int clientID1;
         private DatabaseAccess dbAccess;
 
         public CartForm(int clientID)
@@ -71,7 +70,7 @@ namespace WinFormsApp2
                         Total = Convert.ToDecimal(row.Cells["Total"].Value),
                         DateAdded = DateTime.Now // Use current time
                     };
-                    clientID1 = orderItem.clientID;
+                    //clientID1 = orderItem.clientID;
                     orderItems.Add(orderItem);
                 }
             }
@@ -83,7 +82,7 @@ namespace WinFormsApp2
             }
 
             SaveOrderItemsToDatabase(orderItems);
-            listCart.DeleteAllCart(clientID1);
+            listCart.DeleteAllCart(ClientID);
             LoadData();
             ClearInputFields();
             MessageBox.Show("Order placed successfully!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
